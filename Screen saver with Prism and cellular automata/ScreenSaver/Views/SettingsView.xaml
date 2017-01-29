@@ -1,0 +1,158 @@
+﻿<UserControl x:Class="Ikc5.AutomataScreenSaver.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:Ikc5.AutomataScreenSaver.Common.ViewModels.Converters;assembly=Ikc5.AutomataScreenSaver.Common.ViewModels"
+             xmlns:viewModels="clr-namespace:Ikc5.AutomataScreenSaver.ViewModels"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:types="clr-namespace:Ikc5.AutomataScreenSaver.Common.Models.Types;assembly=Ikc5.AutomataScreenSaver.Common.Models"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Ikc5.AutomataScreenSaver.Common.ViewModels;component/Styles/SettingsStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid d:DataContext="{d:DesignInstance Type=viewModels:DesignSettingsViewModel, IsDesignTimeCreatable=True}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Row #1 - Visible cell animation-->
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Automaton type"
+                   Style="{StaticResource SettingsTextBlockStyle}"/>
+
+        <ComboBox Grid.Row="0"
+                  Grid.Column="1"
+                  x:Name="AutomatonType"
+                  Style="{StaticResource SettingsComboBoxStyle}"
+                  SelectedItem="{Binding Path=ModuleName, Mode=TwoWay}"
+                  ItemsSource="{Binding Path=ModuleNameCollection, Mode=OneWay}"
+                  TabIndex="0"/>
+
+        <!--Row #3 - Visible cell animation-->
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Secondary displays"
+                   Style="{StaticResource SettingsTextBlockStyle}"/>
+
+        <ComboBox Grid.Row="1"
+                  Grid.Column="1"
+                  x:Name="SecondaryMonitorType"
+                  Style="{StaticResource SettingsComboBoxStyle}"
+                  SelectedItem="{Binding Path=SecondaryMonitorType, Mode=TwoWay}"
+                  ItemsSource="{Binding Source={converters:EnumBindingSource {x:Type types:SecondaryMonitorType}}}"
+                  TabIndex="1"/>
+
+        <!--Row #3 - Visible cell animation-->
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Text="Background type"
+                   Style="{StaticResource SettingsTextBlockStyle}"/>
+
+        <ComboBox Grid.Row="2"
+                  Grid.Column="1"
+                  x:Name="BackgroundType"
+                  Style="{StaticResource SettingsComboBoxStyle}"
+                  SelectedItem="{Binding Path=BackgroundType, Mode=TwoWay}"
+                  ItemsSource="{Binding Source={converters:EnumBindingSource {x:Type types:BackgroundType}}}"
+                  TabIndex="1"
+                  IsEnabled="False"/>
+
+        <!--Row #4 - Background additional settings-->
+        <Border Grid.Row="3"
+                Grid.Column="0"
+                x:Name="BackroundColorLabel">
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=BackgroundType}" Value="SolidColor">
+                            <Setter Property="Border.Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <TextBlock Text="Color"
+                       Style="{StaticResource SettingsTextBlockStyle}"/>
+
+        </Border>
+
+        <Border Grid.Row="3"
+                Grid.Column="0"
+                x:Name="BackroundImageLabel">
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=BackgroundType}" Value="Picture">
+                            <Setter Property="Border.Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <TextBlock Text="Image"
+                       Style="{StaticResource SettingsTextBlockStyle}"/>
+
+        </Border>
+
+        <Border Grid.Row="3"
+                Grid.Column="1">
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=BackgroundType}" Value="SolidColor">
+                            <Setter Property="Border.Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <xctk:ColorPicker
+                Grid.Row="1"
+                Grid.Column="2"
+                x:Name="StartColor"
+                SelectedColor="{Binding BackgroundColor, Mode=TwoWay}"
+                Style="{StaticResource SettingsColorPickerStyle}"
+                TabIndex="2"/>
+
+        </Border>
+
+        <Border Grid.Row="3"
+                Grid.Column="1">
+            <Border.Style>
+                <Style>
+                    <Setter Property="Border.Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=BackgroundType}" Value="Picture">
+                            <Setter Property="Border.Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+        </Border>
+
+    </Grid>
+</UserControl>

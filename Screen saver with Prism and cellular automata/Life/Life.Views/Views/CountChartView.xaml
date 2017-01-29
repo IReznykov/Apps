@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="Ikc5.AutomataScreenSaver.Life.Views.CountChartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ikc5.AutomataScreenSaver.Life.Views"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             mc:Ignorable="d" 
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:viewModels="clr-namespace:Ikc5.AutomataScreenSaver.Life.ViewModels"
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Ikc5.AutomataScreenSaver.Common.ViewModels;component/Styles/SettingsStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid d:DataContext="{d:DesignInstance Type=viewModels:DesignCountChartViewModel, IsDesignTimeCreatable=True}">
+
+        <oxy:Plot
+            x:Name="CellCountPlot"
+            Grid.Row="0" Grid.Column="0"
+            LegendPlacement="Outside"
+			LegendPosition="TopCenter"
+			LegendOrientation="Horizontal"
+			LegendBorderThickness="0"
+            PlotAreaBorderThickness="0"
+            IsEnabled="False"
+            Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+
+        <oxy:Plot.Axes>
+                <oxy:LinearAxis
+                    x:Name="IndexAxis"
+                    Position="Bottom"
+                    TickStyle="Crossing"
+                    MajorGridlineStyle="None" MinorGridlineStyle="None" 
+                    PositionAtZeroCrossing="True"
+                    AxislineThickness="1"
+                    AbsoluteMinimum="0" AbsoluteMaximum="100"
+                    AxislineStyle="Solid"/>
+                
+                <oxy:LinearAxis
+                    x:Name="CountAxis"
+                    Position="Left"
+                    TickStyle="Outside"
+                    MajorGridlineStyle="Dot" MinorGridlineStyle="Dot"
+                    AxislineThickness="1"
+                    AxislineStyle="Solid"/>
+                
+            </oxy:Plot.Axes>
+
+            <oxy:Plot.Series>
+                <oxy:LineSeries
+                    x:Name="TotalSeries"
+                    Title="Count"
+                    ItemsSource="{Binding TotalCellCountList}"
+                    DataFieldX="X"
+                    DataFieldY="Y"
+                    Color="Blue"
+                    StrokeThickness="1"/>
+
+                <oxy:LineSeries
+                    x:Name="BornedSeries"
+                    Title="Borned"
+                    ItemsSource="{Binding BornedCellCountList}"
+                    Color="Green"
+                    StrokeThickness="1"/>
+
+                <oxy:LineSeries
+                    x:Name="DiedSeries"
+                    Title="Died"
+                    ItemsSource="{Binding DiedCellCountList}"
+                    Color="Red"
+                    StrokeThickness="1"/>
+                
+            </oxy:Plot.Series>
+        </oxy:Plot>
+    </Grid>
+</UserControl>
