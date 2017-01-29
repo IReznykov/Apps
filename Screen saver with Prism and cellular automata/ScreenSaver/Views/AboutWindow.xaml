@@ -109,7 +109,7 @@
                 TextWrapping="WrapWithOverflow"
                 Style="{StaticResource SettingsTextBlockStyle}">
                 <Hyperlink
-                    NavigateUri="https://github.com/IReznykov/Blog"
+                    NavigateUri="https://github.com/IReznykov/Apps/tree/master/Screen%20saver%20with%20Prism%20and%20cellular%C2%A0automata"
                     RequestNavigate="Hyperlink_RequestNavigate">
                     GitHub Repository
                 </Hyperlink>
